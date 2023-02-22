@@ -8,7 +8,6 @@
 int main(void)
 {
     unsigned long int a = 1, b = 2, c, i;
-
     printf("%lu, %lu", a, b);
     for (i = 2; i < 98; i++)
     {
