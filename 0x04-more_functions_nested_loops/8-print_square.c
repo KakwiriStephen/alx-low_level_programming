@@ -11,7 +11,7 @@ return;
 }
 for (int i = 0; i < size; i++) { 
 for (int j = 0; j < size; j++) { 
-_putchar('#'); // print a '#' character
+_putchar('#'); 
 }
 _putchar('\n'); // print a new line after each row
 }
