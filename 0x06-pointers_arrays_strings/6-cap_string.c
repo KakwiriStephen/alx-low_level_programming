@@ -1,28 +1,34 @@
 #include "main.h"
-#include <stdio.h>
 
 /**
- * main - check the code
+ * cap_string - Capitalizes all words of a string.
+ * @s: The string to be modified
  *
- * Return: Always 0.
+ * Return: The modified string
  */
-int main(void){
-  
+
 char *cap_string(char *s)
+{
+	int x, y;
 
-  int i, j;
-  char sep[] = " \t\n,;.!?\"(){}";
+	char spe[13] = {' ', '\t', '\n', ',', ';', '.',
+		'!', '?', '"', '(', ')', '{', '}'};
 
-  for (i = 0; s[i] != '\0'; i++)
-  {
-    if (i == 0 || s[i - 1] == sep[0] || s[i - 1] == sep[1] || s[i - 1] == sep[2]
-        || s[i - 1] == sep[3] || s[i - 1] == sep[4] || s[i - 1] == sep[5] || s[i - 1] == sep[6]
-        || s[i - 1] == sep[7] || s[i - 1] == sep[8] || s[i - 1] == sep[9] || s[i - 1] == sep[10]
-        || s[i - 1] == sep[11] || s[i - 1] == sep[12])
-    {
-      if (s[i] >= 'a' && s[i] <= 'z')
-        s[i] -= 32;
-    }
-  }
-  return (s);
+	for (x = 0; s[x] != '\0'; x++)
+	{
+		if (x == 0 && s[x] >= 'a' && s[x] <= 'z')
+			s[x] -= 32;
+
+		for (y = 0; y < 13; y++)
+		{
+			if (s[x] == spe[y])
+			{
+				if (s[x + 1] >= 'a' && s[x + 1] <= 'z')
+				{
+					s[x + 1] -= 32;
+				}
+			}
+		}
+	}
+	return (s);
 }
