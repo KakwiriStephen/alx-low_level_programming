@@ -1,68 +1,48 @@
 #include "main.h"
 
-/**
- * move_past_star - iterates past asterisk
- * @s2: the second string, can contain wildcard
- *
- * Return: the pointer past star
- */
-char *move_past_star(char *s2)
-{
-	if (*s2 == '*')
-		return (move_past_star(s2 + 1));
-	else
-		return (s2);
-}
+int check_pal(char *s, int x, int len);
+int _strlen_recursion(char *s);
 
 /**
- * inception - makes magic a reality
- * @s1: the first string
- * @s2: the second string, can contain wildcard
+ * is_palindrome - will check if a string is a palindrome
+ * @s: The string to reverse
  *
- * Return: 1 if identifcal, 0 if false
+ * Return: 1 if it's a palindrome and 0 if not
  */
-int inception(char *s1, char *s2)
+
+int is_palindrome(char *s)
 {
-	int ret = 0;
-
-	if (*s1 == 0)
-		return (0);
-	if (*s1 == *s2)
-		ret += wildcmp(s1 + 1, s2 + 1);
-	ret += inception(s1 + 1, s2);
-	return (ret);
-}
-
-/**
- * wildcmp - compares two strings lexicographically
- * @s1: the first string
- * @s2: the second string, can contain wildcard
- *
- * Return: 1 if identical, 0 if false
- */
-int wildcmp(char *s1, char *s2)
-{
-	int ret = 0;
-
-	if (!*s1 && *s2 == '*' && !*move_past_star(s2))
+	if (*s == 0)
 		return (1);
-	if (*s1 == *s2)
-	{
-		if (!*s1)
-			return (1);
-		return (wildcmp(s1 + 1, *s2 == '*' ? s2 : s2 + 1));
-	}
-	if (!*s1 || !s2)
+	return (check_pal(s, 0, _strlen_recursion(s)));
+}
+
+/**
+ * _strlen_recursion - will return the lenght of a string
+ * @s: The string whose lenth will be calculated
+ *
+ * Return: lenth of the string
+ */
+
+int _strlen_recursion(char *s)
+{
+	if (*s == '\0')
 		return (0);
-	if (*s2 == '*')
-	{
-		s2 = move_past_star(s2);
-		if (!*s2)
-			return (1);
-		if (*s1 == *s2)
-			ret += wildcmp(s1 + 1, s2 + 1);
-		ret += inception(s1, s2);
-		return (!!ret);
-	}
-	return (0);
+	return (1 + _strlen_recursion(s + 1));
+}
+/**
+ * check_pal - will check the characters recursively for the palindrome
+ * @s: The string
+ * @x: The iterator
+ * @len: Length of the string
+ *
+ * Return: 1 if it's a palindrome, 0 if it's not
+ */
+int check_pal(char *s, int x, int len)
+{
+	if (*(s + x) != *(s + len - 1))
+		return (0);
+	if (x >= len)
+		return (1);
+	return (check_pal(s, x + 1, len - 1));
 }
