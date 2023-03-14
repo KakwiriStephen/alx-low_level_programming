@@ -1,85 +1,75 @@
-#include "main.h"
 #include <stdlib.h>
+#include "main.h"
 
 /**
- * copychars - copies chars to buffer
- * @b: destination buffer
- * @start: starting char pointer
- * @stop: ending char pointer
- */
-void copychars(char *b, char *start, char *stop)
-{
-	while (start <= stop)
-		*b++ = *start++;
-	*b = 0;
-}
-
-/**
- * wordcount - counts the number of words
- * @str: the sentence string
+ * count_word - counts the number of words
+ * @s: The string to be analysed
  *
- * Return: int number of words
+ * Return: Word count
  */
-int wordcount(char *str)
+int count_word(char *s)
 {
-	int words = 0, in_word = 0;
+	int a, b, flag;
 
-	while (1)
+	b = 0;
+	flag = 0;
+
+	for (a = 0; s[a] != '\0'; a++)
 	{
-		if (*str == ' ' || !*str)
+		if (s[a] == ' ')
+			flag = 0;
+		else if (flag == 0)
 		{
-			if (in_word)
-				words++;
-			in_word = 0;
-			if (!*str)
-				break;
+			flag = 1;
+			b++;
 		}
-		else
-			in_word++;
-		str++;
 	}
-	return (words);
+	return (b);
 }
 
 /**
- * strtow - splits sentence into words
- * @str: the sentence string
+ * **strtow - Will split a string in to words
+ * @str: The string to be split
  *
- * Return: pointer to string array
+ * Return: The pointer to an array of strings otherwise NULL
  */
 char **strtow(char *str)
 {
-	int words = 0, in_word = 0;
-	char **ret, *word_start;
+	char *tmp, **mtx;
+	int x, y = 0, a = 0, len = 0, words, start, stop;
 
-	if (!str || !*str || !wordcount(str))
+	while (*(str + len))
+		len++;
+	words = count_word(str);
+	if (words == 0)
 		return (NULL);
-	ret = malloc(sizeof(char *) * (wordcount(str) + 1));
-	while (1);
+
+	mtx = (char **) malloc(sizeof(char *) * (words + 1));
+	if (mtx == NULL)
+		return (NULL);
+
+	for (x = 0; x <= len; x++)
 	{
-		if (*str == ' ' || !*str)
+		if (str[x] == ' ' || str[x] == '\0')
 		{
-			if (in_word)
+			if (a)
 			{
-				ret[words] = malloc(sizeof(char) * (in_word + 1));
-				if (!ret[words])
-				{
+				stop = x;
+				tmp = (char *) malloc(sizeof(char) * (a + 1));
+				if (tmp == NULL)
 					return (NULL);
-				}
-				copychars(ret[words], word_start, str - 1);
-				words++;
-				in_word = 0;
+				while (start < stop)
+					*tmp++ = str[start++];
+				*tmp = '\0';
+				mtx[y] = tmp - a;
+				y++;
+				a = 0;
 			}
-			if (!*str)
-				break;
 		}
-		else
-		{
-			if (!in_word++)
-				word_start = str;
-		}
-		str++;
+		else if (a++ == 0)
+			start = x;
 	}
-	ret[words] = 0;
-	return (ret);
+	mtx[y] = NULL;
+
+	return (mtx);
 }
