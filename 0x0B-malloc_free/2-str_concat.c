@@ -2,43 +2,48 @@
 #include "main.h"
 
 /**
- * *argstostr - will concantenate all the arguments of the program
- * @ac: The number of arguments
- * @av: The array of arguments
+ * *str_concat - Will concatenate two strings
+ * @s1: The string to concatenate
+ * @s2: The second string to concatenate
  *
  * Return: The pointer to the new string, otherwise NULL.
  */
 
-char *argstostr(int ac, char **av)
+char *str_concat(char *s1, char *s2)
 {
-	char *str;
-	int x, y, z, len;
+	char *s3;
+	unsigned int a = 0, b = 0, len = 0, len1 = 0;
 
-	if (ac == 0 || av == NULL)
-		return (NULL);
-
-	for (x = 0; x < ac; x++)
-	{
-		for (y = 0; av[x][y] != '\0'; y++)
-			len++;
+	while (s1 && s1[len])
 		len++;
-	}
-	str = malloc(sizeof(char) * (len + 1));
+	while (s2 && s2[len1])
+		len1++;
 
-	if (str == NULL)
+	s3 = malloc(sizeof(char) * (len + len1 + 1));
+	if (s3 == NULL)
 		return (NULL);
 
-	z = 0;
+	a = 0;
+	b = 0;
 
-	for (x = 0; x < ac; x++)
+	if (s1)
 	{
-		for (y = 0; av[x][y] != '\0'; y++)
+		while (a < len)
 		{
-			str[z] = av[x][y];
-			z++;
+			s3[a] = s1[a];
+			a++;
 		}
-		str[z] = '\n';
-		z++;
 	}
-	return (str);
+	if (s2)
+	{
+		while (a < (len + len1))
+		{
+			s3[a] = s2[b];
+			a++;
+			b++;
+		}
+	}
+	s3[a] = '\0';
+
+	return (s3);
 }
