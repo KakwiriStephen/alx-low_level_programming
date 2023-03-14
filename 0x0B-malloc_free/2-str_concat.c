@@ -1,30 +1,44 @@
-#include "main.h"
 #include <stdlib.h>
+#include "main.h"
 
 /**
- * str_concat - concatenaste two strings
- * @s1: the first string
- * @s2: the second string
+ * *argstostr - will concantenate all the arguments of the program
+ * @ac: The number of arguments
+ * @av: The array of arguments
  *
- * Return: pointer to the concatenated string
+ * Return: The pointer to the new string, otherwise NULL.
  */
-char *str_concat(char *s1, char *s2)
-{
-	int len1 = 0, len2 = 0;
-	char *ret;
 
-	while (s1 && *s1++)
-		len1++;
-	while (s2 && *s2++)
-		len2++;
-	ret = malloc(sizeof(char) * (len1 + len2 + 1));
-	if (!ret)
+char *argstostr(int ac, char **av)
+{
+	char *str;
+	int x, y, z, len;
+
+	if (ac == 0 || av == NULL)
 		return (NULL);
-	ret += len1 + len2;
-	*ret = '\0';
-	for (s2--; len2--;)
-		*--ret = *--s2;
-	for (s1--; len1--;)
-		*--ret = *--s1;
-	return (ret);
+
+	for (x = 0; x < ac; x++)
+	{
+		for (y = 0; av[x][y] != '\0'; y++)
+			len++;
+		len++;
+	}
+	str = malloc(sizeof(char) * (len + 1));
+
+	if (str == NULL)
+		return (NULL);
+
+	z = 0;
+
+	for (x = 0; x < ac; x++)
+	{
+		for (y = 0; av[x][y] != '\0'; y++)
+		{
+			str[z] = av[x][y];
+			z++;
+		}
+		str[z] = '\n';
+		z++;
+	}
+	return (str);
 }
