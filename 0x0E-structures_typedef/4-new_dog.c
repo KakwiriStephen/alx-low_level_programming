@@ -1,49 +1,46 @@
-#include "dog.h"
 #include <stdlib.h>
+#include "dog.h"
 
 /**
- * _strdup - duplicates a string
- * @str: the string to duplicate
+ * new_dog - will create a new dog
+ * @name: Name of the dog
+ * @age: age of the dog
+ * @owner: owner of the dog.
  *
- * Return: pointer to the duplicated string
+ * Return: pointer to new dog, otherwis NULL.
  */
-char *_strdup(char *str)
-{
-	int length = 0;
-	char *ret;
 
-	if (str == NULL)
-		return (NULL);
-	while (*str++)
-		length++;
-	ret = malloc(sizeof(char) * (length + 1));
-	if (!ret)
-		return (NULL);
-	for (length++; length--;)
-		re[length] = *--str;
-	return (ret);
-}
-
-/**
- * new_dog - instantiates a dawg
- * @name: the dawgy name
- * @age: the dawgy age
- * @owner: the dawgy owner
- *
- * Return: pointer to new dawg.
- */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *d = malloc(sizeof(dog_t));
+	dog_t *dg1;
+	int nameLen, ownerLen, x;
 
-	if (!d)
+	dg1 = (dog_t *)malloc(sizeof(dog_t));
+	if (dg1 == NULL)
 		return (NULL);
-	d->name = _strdup(name);
-	if (name && !d->name)
-		return (free(d), NULL);
-	d->owner = _strdup(owner);
-	if (owner && !d->owner)
-		return (free(d->name), free(d), NULL);
-	d->age = age;
-	return (d);
+
+	nameLen = ownerLen = 0;
+	while
+		(name[nameLen++])
+	while
+		(owner[ownerLen++]);
+	dg1->name = malloc(nameLen * sizeof(dg1->name));
+	if (dg1->name == NULL)
+	{
+		free(dg1);
+		return (NULL);
+	}
+	for (x = 0; x <= nameLen; x++)
+		dg1->name[x] = name[x];
+	dg1->age = age;
+	dg1->owner = malloc(ownerLen * sizeof(dg1->owner));
+	if (dg1->owner == NULL)
+	{
+		free(dg1->name);
+		free(dg1);
+		return (NULL);
+	}
+	for (x = 0; x <= ownerLen; x++)
+		dg1->owner[x] = owner[x];
+	return (dg1);
 }
